@@ -24,6 +24,17 @@ No setup needed — the defaults lock the `system` cache group in `Production` c
 - Replaces the "Flush all caches" entry in the clear-cache toolbar with a disabled notice while the lock is active; the dropdown and "Flush frontend caches" stay in place.
 - "Flush frontend caches" (pages) keeps working for editors.
 
+## Flush a single cache (CLI)
+
+Clear only specific caches without wiping a whole group — e.g. recompile Fluid templates after a deployment without touching the warmed PHP-code, l10n or DI caches:
+
+```bash
+vendor/bin/typo3 cache:flush --cache fluid_template
+vendor/bin/typo3 cache:flush --cache fluid_template,l10n
+```
+
+All identifiers must be valid or nothing is flushed. The dependency injection cache is not flushable this way — use `cache:flush --group di`.
+
 ## What it does not block
 
 - CLI: `vendor/bin/typo3 cache:flush` always works — deployments are unaffected.
