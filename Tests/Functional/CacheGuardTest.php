@@ -6,16 +6,22 @@ namespace Wazum\CacheGuard\Tests\Functional;
 
 use PHPUnit\Framework\Attributes\Test;
 use Psr\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\Console\Tester\CommandTester;
 use TYPO3\CMS\Backend\Backend\Event\ModifyClearCacheActionsEvent;
 use TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend;
 use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Console\CommandRegistry;
 use TYPO3\CMS\Core\Core\ApplicationContext;
 use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\DependencyInjection\ServiceProviderRegistry;
+use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Service\OpcodeCacheService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 use Wazum\CacheGuard\Cache\LockableCacheManager;
+use Wazum\CacheGuard\Command\CacheFlushCommand;
 use Wazum\CacheGuard\Service\LockableOpcodeCacheService;
+use Wazum\CacheGuard\ServiceProvider;
 
 final class CacheGuardTest extends FunctionalTestCase
 {
@@ -145,6 +151,64 @@ final class CacheGuardTest extends FunctionalTestCase
         $actionIds = array_column($event->getCacheActions(), 'id');
         self::assertNotContains('all', $actionIds);
         self::assertContains('cacheGuardInformation', $actionIds);
+    }
+
+    #[Test]
+    public function cacheFlushCommandIsOverriddenAndExposesCacheOption(): void
+    {
+        $command = $this->get(CommandRegistry::class)->getCommandByIdentifier('cache:flush');
+
+        self::assertInstanceOf(CacheFlushCommand::class, $command);
+        self::assertTrue($command->getDefinition()->hasOption('cache'));
+    }
+
+    #[Test]
+    public function serviceProviderParticipatesInTheFailsafeRegistry(): void
+    {
+        // The real CLI boots failsafe; only partOfMinimalUsableSystem packages are kept.
+        // This proves our override reaches the failsafe cache:flush the binary actually runs.
+        $registry = new ServiceProviderRegistry($this->get(PackageManager::class), true);
+        $providerClasses = [];
+        foreach ($registry as $provider) {
+            $providerClasses[] = $provider::class;
+        }
+
+        self::assertContains(ServiceProvider::class, $providerClasses);
+    }
+
+    #[Test]
+    public function cacheOptionRejectsDependencyInjectionCache(): void
+    {
+        $command = $this->get(CommandRegistry::class)->getCommandByIdentifier('cache:flush');
+        $tester = new CommandTester($command);
+
+        $exitCode = $tester->execute(['--cache' => 'di']);
+
+        self::assertSame(1, $exitCode);
+        self::assertStringContainsString('--group di', $tester->getDisplay());
+    }
+
+    #[Test]
+    public function cacheOptionFailsForEmptyValue(): void
+    {
+        $command = $this->get(CommandRegistry::class)->getCommandByIdentifier('cache:flush');
+        $tester = new CommandTester($command);
+
+        $exitCode = $tester->execute(['--cache' => '']);
+
+        self::assertSame(1, $exitCode);
+    }
+
+    #[Test]
+    public function cacheOptionFailsForUnknownIdentifier(): void
+    {
+        $command = $this->get(CommandRegistry::class)->getCommandByIdentifier('cache:flush');
+        $tester = new CommandTester($command);
+
+        $exitCode = $tester->execute(['--cache' => 'does_not_exist']);
+
+        self::assertSame(1, $exitCode);
+        self::assertStringContainsString('does_not_exist', $tester->getDisplay());
     }
 
     private function initializeEnvironment(ApplicationContext $context, bool $cli): void

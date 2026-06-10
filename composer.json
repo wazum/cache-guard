@@ -45,6 +45,8 @@
             "version": "1.0.0",
             "web-dir": ".Build/Web",
             "Package": {
+                "serviceProvider": "Wazum\\CacheGuard\\ServiceProvider",
+                "partOfMinimalUsableSystem": true,
                 "providesPackages": {}
             }
         }
