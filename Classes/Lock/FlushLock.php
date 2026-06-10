@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Wazum\CacheFlushLock\Lock;
+namespace Wazum\CacheGuard\Lock;
 
 use TYPO3\CMS\Core\Core\Environment;
-use Wazum\CacheFlushLock\Configuration\ExtensionConfiguration;
+use Wazum\CacheGuard\Configuration\ExtensionConfiguration;
 
 final readonly class FlushLock
 {

@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Wazum\CacheFlushLock\Tests\Unit\EventListener;
+namespace Wazum\CacheGuard\Tests\Unit\EventListener;
 
 use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Backend\Backend\Event\ModifyClearCacheActionsEvent;
 use TYPO3\CMS\Core\Core\ApplicationContext;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
-use Wazum\CacheFlushLock\EventListener\RemoveLockedClearCacheActions;
-use Wazum\CacheFlushLock\Lock\FlushLock;
+use Wazum\CacheGuard\EventListener\RemoveLockedClearCacheActions;
+use Wazum\CacheGuard\Lock\FlushLock;
 
 final class RemoveLockedClearCacheActionsTest extends UnitTestCase
 {
@@ -49,7 +49,7 @@ final class RemoveLockedClearCacheActionsTest extends UnitTestCase
         (new RemoveLockedClearCacheActions(new FlushLock()))($event);
 
         $actions = $event->getCacheActions();
-        self::assertSame(['pages', 'cacheFlushLockInformation'], array_column($actions, 'id'));
+        self::assertSame(['pages', 'cacheGuardInformation'], array_column($actions, 'id'));
 
         $informationRow = end($actions);
         self::assertArrayNotHasKey('endpoint', $informationRow);

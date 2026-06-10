@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 $EM_CONF[$_EXTKEY] = [
-    'title' => 'Cache Flush Lock',
+    'title' => 'Cache Guard',
     'description' => 'Prevents backend cache flushes of protected cache groups in production-like contexts',
     'category' => 'misc',
     'state' => 'stable',

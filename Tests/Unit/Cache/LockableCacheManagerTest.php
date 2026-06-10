@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Wazum\CacheFlushLock\Tests\Unit\Cache;
+namespace Wazum\CacheGuard\Tests\Unit\Cache;
 
 use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend;
@@ -10,8 +10,8 @@ use TYPO3\CMS\Core\Cache\Frontend\VariableFrontend;
 use TYPO3\CMS\Core\Core\ApplicationContext;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
-use Wazum\CacheFlushLock\Cache\LockableCacheManager;
-use Wazum\CacheFlushLock\Tests\Unit\Cache\Fixtures\FlushRecordingBackend;
+use Wazum\CacheGuard\Cache\LockableCacheManager;
+use Wazum\CacheGuard\Tests\Unit\Cache\Fixtures\FlushRecordingBackend;
 
 final class LockableCacheManagerTest extends UnitTestCase
 {
@@ -21,7 +21,7 @@ final class LockableCacheManagerTest extends UnitTestCase
     protected function tearDown(): void
     {
         FlushRecordingBackend::$flushedCacheIdentifiers = [];
-        unset($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_flush_lock']);
+        unset($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_guard']);
         parent::tearDown();
     }
 

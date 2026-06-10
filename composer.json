@@ -1,5 +1,5 @@
 {
-    "name": "wazum/cache-flush-lock",
+    "name": "wazum/cache-guard",
     "description": "Prevents backend cache flushes of protected cache groups in production-like contexts",
     "license": "GPL-2.0-or-later",
     "type": "typo3-cms-extension",
@@ -23,12 +23,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Wazum\\CacheFlushLock\\": "Classes/"
+            "Wazum\\CacheGuard\\": "Classes/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Wazum\\CacheFlushLock\\Tests\\": "Tests/"
+            "Wazum\\CacheGuard\\Tests\\": "Tests/"
         }
     },
     "config": {
@@ -41,7 +41,7 @@
     },
     "extra": {
         "typo3/cms": {
-            "extension-key": "cache_flush_lock",
+            "extension-key": "cache_guard",
             "version": "1.0.0",
             "web-dir": ".Build/Web",
             "Package": {

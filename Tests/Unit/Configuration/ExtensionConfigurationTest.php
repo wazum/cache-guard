@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Wazum\CacheFlushLock\Tests\Unit\Configuration;
+namespace Wazum\CacheGuard\Tests\Unit\Configuration;
 
 use PHPUnit\Framework\Attributes\Test;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
-use Wazum\CacheFlushLock\Configuration\ExtensionConfiguration;
+use Wazum\CacheGuard\Configuration\ExtensionConfiguration;
 
 final class ExtensionConfigurationTest extends UnitTestCase
 {
     protected function tearDown(): void
     {
-        unset($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_flush_lock']);
+        unset($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_guard']);
         parent::tearDown();
     }
 
@@ -25,14 +25,14 @@ final class ExtensionConfigurationTest extends UnitTestCase
     #[Test]
     public function returnsConfiguredLockedGroups(): void
     {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_flush_lock']['lockedGroups'] = 'system, pages';
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_guard']['lockedGroups'] = 'system, pages';
         self::assertSame(['system', 'pages'], (new ExtensionConfiguration())->getLockedGroups());
     }
 
     #[Test]
     public function returnsEmptyLockedGroupsForEmptyValue(): void
     {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_flush_lock']['lockedGroups'] = '';
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_guard']['lockedGroups'] = '';
         self::assertSame([], (new ExtensionConfiguration())->getLockedGroups());
     }
 
@@ -45,7 +45,7 @@ final class ExtensionConfigurationTest extends UnitTestCase
     #[Test]
     public function returnsConfiguredLockedContexts(): void
     {
-        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_flush_lock']['lockedContexts'] = 'Production, Testing';
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_guard']['lockedContexts'] = 'Production, Testing';
         self::assertSame(['Production', 'Testing'], (new ExtensionConfiguration())->getLockedContexts());
     }
 }

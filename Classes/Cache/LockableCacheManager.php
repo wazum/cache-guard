@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Wazum\CacheFlushLock\Cache;
+namespace Wazum\CacheGuard\Cache;
 
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Exception\NoSuchCacheGroupException;
-use Wazum\CacheFlushLock\Lock\FlushLock;
+use Wazum\CacheGuard\Lock\FlushLock;
 
 final class LockableCacheManager extends CacheManager
 {

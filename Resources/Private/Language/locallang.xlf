@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xliff version="1.0">
-    <file source-language="en" datatype="plaintext" original="EXT:cache_flush_lock/Resources/Private/Language/locallang.xlf" product-name="cache_flush_lock">
+    <file source-language="en" datatype="plaintext" original="EXT:cache_guard/Resources/Private/Language/locallang.xlf" product-name="cache_guard">
         <header/>
         <body>
             <trans-unit id="toolbar.systemCachesLocked.title">

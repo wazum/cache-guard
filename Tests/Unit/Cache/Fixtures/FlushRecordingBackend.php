@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Wazum\CacheFlushLock\Tests\Unit\Cache\Fixtures;
+namespace Wazum\CacheGuard\Tests\Unit\Cache\Fixtures;
 
 use TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend;
 

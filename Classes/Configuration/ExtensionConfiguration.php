@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Wazum\CacheFlushLock\Configuration;
+namespace Wazum\CacheGuard\Configuration;
 
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationExtensionNotConfiguredException;
 use TYPO3\CMS\Core\Configuration\Exception\ExtensionConfigurationPathDoesNotExistException;
@@ -12,7 +12,7 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 final readonly class ExtensionConfiguration
 {
-    private const EXTENSION_KEY = 'cache_flush_lock';
+    private const EXTENSION_KEY = 'cache_guard';
 
     public function __construct(
         private CoreExtensionConfiguration $coreExtensionConfiguration = new CoreExtensionConfiguration(),

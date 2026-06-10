@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Wazum\CacheFlushLock\Tests\Unit\Lock;
+namespace Wazum\CacheGuard\Tests\Unit\Lock;
 
 use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Core\Core\ApplicationContext;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
-use Wazum\CacheFlushLock\Lock\FlushLock;
+use Wazum\CacheGuard\Lock\FlushLock;
 
 final class FlushLockTest extends UnitTestCase
 {
@@ -16,7 +16,7 @@ final class FlushLockTest extends UnitTestCase
 
     protected function tearDown(): void
     {
-        unset($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_flush_lock']);
+        unset($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_guard']);
         parent::tearDown();
     }
 
@@ -74,7 +74,7 @@ final class FlushLockTest extends UnitTestCase
     public function locksConfiguredGroups(): void
     {
         $this->initializeEnvironment('Production', false);
-        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_flush_lock']['lockedGroups'] = 'system, pages';
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_guard']['lockedGroups'] = 'system, pages';
         $flushLock = new FlushLock();
         self::assertTrue($flushLock->isGroupLocked('pages'));
         self::assertTrue($flushLock->isGroupLocked('system'));
@@ -84,7 +84,7 @@ final class FlushLockTest extends UnitTestCase
     public function locksConfiguredContexts(): void
     {
         $this->initializeEnvironment('Testing', false);
-        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_flush_lock']['lockedContexts'] = 'Production, Testing';
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_guard']['lockedContexts'] = 'Production, Testing';
         self::assertTrue((new FlushLock())->isGroupLocked('system'));
     }
 
@@ -120,7 +120,7 @@ final class FlushLockTest extends UnitTestCase
     public function reportsNoActiveLockWithEmptyGroupConfiguration(): void
     {
         $this->initializeEnvironment('Production', false);
-        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_flush_lock']['lockedGroups'] = '';
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_guard']['lockedGroups'] = '';
         self::assertFalse((new FlushLock())->isAnyGroupLocked());
     }
 
@@ -128,7 +128,7 @@ final class FlushLockTest extends UnitTestCase
     public function doesNotLockSiblingSubContextWithSharedPrefix(): void
     {
         $this->initializeEnvironment('Production/StagingFoo', false);
-        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_flush_lock']['lockedContexts'] = 'Production/Staging';
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['cache_guard']['lockedContexts'] = 'Production/Staging';
         self::assertFalse((new FlushLock())->isGroupLocked('system'));
     }
 }

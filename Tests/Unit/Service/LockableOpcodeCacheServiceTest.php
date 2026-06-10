@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Wazum\CacheFlushLock\Tests\Unit\Service;
+namespace Wazum\CacheGuard\Tests\Unit\Service;
 
 use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Core\Core\ApplicationContext;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Service\OpcodeCacheService;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
-use Wazum\CacheFlushLock\Service\LockableOpcodeCacheService;
+use Wazum\CacheGuard\Service\LockableOpcodeCacheService;
 
 final class LockableOpcodeCacheServiceTest extends UnitTestCase
 {

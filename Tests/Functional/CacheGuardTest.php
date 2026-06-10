@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Wazum\CacheFlushLock\Tests\Functional;
+namespace Wazum\CacheGuard\Tests\Functional;
 
 use PHPUnit\Framework\Attributes\Test;
 use Psr\EventDispatcher\EventDispatcherInterface;
@@ -14,12 +14,12 @@ use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Service\OpcodeCacheService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
-use Wazum\CacheFlushLock\Cache\LockableCacheManager;
-use Wazum\CacheFlushLock\Service\LockableOpcodeCacheService;
+use Wazum\CacheGuard\Cache\LockableCacheManager;
+use Wazum\CacheGuard\Service\LockableOpcodeCacheService;
 
-final class CacheFlushLockTest extends FunctionalTestCase
+final class CacheGuardTest extends FunctionalTestCase
 {
-    protected array $testExtensionsToLoad = ['wazum/cache-flush-lock'];
+    protected array $testExtensionsToLoad = ['wazum/cache-guard'];
 
     // The testing framework forces hash/imagesizes/pages/rootline to NullBackend,
     // which would make the pages-flush assertions pass vacuously — restore a real backend.
@@ -144,7 +144,7 @@ final class CacheFlushLockTest extends FunctionalTestCase
 
         $actionIds = array_column($event->getCacheActions(), 'id');
         self::assertNotContains('all', $actionIds);
-        self::assertContains('cacheFlushLockInformation', $actionIds);
+        self::assertContains('cacheGuardInformation', $actionIds);
     }
 
     private function initializeEnvironment(ApplicationContext $context, bool $cli): void

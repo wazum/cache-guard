@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Wazum\CacheFlushLock\Service;
+namespace Wazum\CacheGuard\Service;
 
 use TYPO3\CMS\Core\Service\OpcodeCacheService;
-use Wazum\CacheFlushLock\Lock\FlushLock;
+use Wazum\CacheGuard\Lock\FlushLock;
 
 final readonly class LockableOpcodeCacheService extends OpcodeCacheService
 {

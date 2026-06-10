@@ -1,6 +1,6 @@
-# Cache Flush Lock
+# Cache Guard
 
-[![Tests](https://github.com/wazum/cache-flush-lock/actions/workflows/ci.yml/badge.svg)](https://github.com/wazum/cache-flush-lock/actions)
+[![Tests](https://github.com/wazum/cache-guard/actions/workflows/ci.yml/badge.svg)](https://github.com/wazum/cache-guard/actions)
 [![PHP](https://img.shields.io/badge/PHP-8.2%20|%208.3%20|%208.4%20|%208.5-blue.svg)](https://www.php.net/)
 [![TYPO3](https://img.shields.io/badge/TYPO3-13.4%20|%2014.3-orange.svg)](https://typo3.org/)
 [![License](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](LICENSE)
@@ -12,7 +12,7 @@ Deployment warms your system caches; this extension makes sure no backend user w
 ## Installation
 
 ```bash
-composer require wazum/cache-flush-lock
+composer require wazum/cache-guard
 ```
 
 No setup needed — the defaults lock the `system` cache group in `Production` contexts.
@@ -32,7 +32,7 @@ No setup needed — the defaults lock the `system` cache group in `Production` c
 
 ## Configuration
 
-Admin Tools → Settings → Extension Configuration → cache_flush_lock:
+Admin Tools → Settings → Extension Configuration → cache_guard:
 
 | Option | Default | Description |
 | --- | --- | --- |

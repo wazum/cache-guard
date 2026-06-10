@@ -2,17 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Wazum\CacheFlushLock\EventListener;
+namespace Wazum\CacheGuard\EventListener;
 
 use TYPO3\CMS\Backend\Backend\Event\ModifyClearCacheActionsEvent;
 use TYPO3\CMS\Core\Attribute\AsEventListener;
-use Wazum\CacheFlushLock\Lock\FlushLock;
+use Wazum\CacheGuard\Lock\FlushLock;
 
-#[AsEventListener('cache-flush-lock/remove-locked-clear-cache-actions')]
+#[AsEventListener('cache-guard/remove-locked-clear-cache-actions')]
 final readonly class RemoveLockedClearCacheActions
 {
-    private const INFORMATION_ACTION_ID = 'cacheFlushLockInformation';
-    private const LANGUAGE_FILE = 'LLL:EXT:cache_flush_lock/Resources/Private/Language/locallang.xlf';
+    private const INFORMATION_ACTION_ID = 'cacheGuardInformation';
+    private const LANGUAGE_FILE = 'LLL:EXT:cache_guard/Resources/Private/Language/locallang.xlf';
 
     public function __construct(
         private FlushLock $flushLock,
