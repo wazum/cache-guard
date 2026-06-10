@@ -42,7 +42,11 @@
     "extra": {
         "typo3/cms": {
             "extension-key": "cache_flush_lock",
-            "web-dir": ".Build/Web"
+            "version": "1.0.0",
+            "web-dir": ".Build/Web",
+            "Package": {
+                "providesPackages": {}
+            }
         }
     },
     "scripts": {
