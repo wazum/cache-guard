@@ -7,6 +7,8 @@
 
 Deployment warms your system caches; this extension makes sure no backend user wipes them between deployments. Editors keep clearing page caches, deployments keep flushing everything — only the destructive bulk flush of warmed system caches is locked in production.
 
+![Clear-cache dropdown with the system cache flush locked](Documentation/Images/clear-cache-dropdown.png)
+
 ## Installation
 
 ```bash
