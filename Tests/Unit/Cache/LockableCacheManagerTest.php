@@ -43,7 +43,9 @@ final class LockableCacheManagerTest extends UnitTestCase
     /** @param list<string> $groups */
     private function registerCacheWithEntry(LockableCacheManager $cacheManager, string $identifier, array $groups): VariableFrontend
     {
-        $cache = new VariableFrontend($identifier, new TransientMemoryBackend());
+        // new TransientMemoryBackend([]) is the only construction satisfying both supported
+        // core versions: v13 requires an untyped $context argument, v14 takes array $options.
+        $cache = new VariableFrontend($identifier, new TransientMemoryBackend([]));
         $cacheManager->registerCache($cache, $groups);
         $cache->set('entry', 'value');
         return $cache;
@@ -166,7 +168,7 @@ final class LockableCacheManagerTest extends UnitTestCase
     {
         $this->initializeEnvironment('Production', false);
         $cacheManager = new LockableCacheManager();
-        $systemCache = new VariableFrontend('fluid_template', new TransientMemoryBackend());
+        $systemCache = new VariableFrontend('fluid_template', new TransientMemoryBackend([]));
         $cacheManager->registerCache($systemCache, ['system']);
         $systemCache->set('entry', 'value', ['someTag']);
 
@@ -180,7 +182,7 @@ final class LockableCacheManagerTest extends UnitTestCase
     {
         $this->initializeEnvironment('Production', false);
         $cacheManager = new LockableCacheManager();
-        $systemCache = new VariableFrontend('fluid_template', new TransientMemoryBackend());
+        $systemCache = new VariableFrontend('fluid_template', new TransientMemoryBackend([]));
         $cacheManager->registerCache($systemCache, ['system']);
         $systemCache->set('entry', 'value', ['someTag']);
 
