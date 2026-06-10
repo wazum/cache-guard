@@ -19,7 +19,7 @@ No setup needed — the defaults lock the `system` cache group in `Production` c
 
 - Blocks flushing of configured cache groups (default: `system`) in configured application contexts (default: `Production`, matched as prefix, so `Production/Staging` is included).
 - Blocks the full opcache reset triggered by "Flush all caches"; targeted single-file opcache invalidation keeps working.
-- Hides the "Flush all caches" toolbar action while the lock is active.
+- Replaces the "Flush all caches" entry in the clear-cache toolbar with a disabled notice while the lock is active; the dropdown and "Flush frontend caches" stay in place.
 - "Flush frontend caches" (pages) keeps working for editors.
 
 ## What it does not block
