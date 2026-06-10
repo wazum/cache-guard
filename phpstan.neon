@@ -8,6 +8,13 @@ parameters:
     # TYPO3 13+, where ModifyClearCacheActionsEvent enforces the CacheAction shape;
     # on 12.4 the event takes a plain array, so the ignore is harmlessly unmatched.
     reportUnmatchedIgnoredErrors: false
+    ignoreErrors:
+        # The AsEventListener attribute only exists on TYPO3 13+; on 12.4 the
+        # listener is registered via Services.yaml and the attribute is inert.
+        -
+            identifier: attribute.notFound
+            message: '#^Attribute class TYPO3\\CMS\\Core\\Attribute\\AsEventListener does not exist\.$#'
+            path: Classes/EventListener/RemoveLockedClearCacheActions.php
     excludePaths:
         # Version-specific XCLASS subclasses: each only compiles against its matching
         # core (readonly on v13+, plain on v12), so static analysis cannot see both.
