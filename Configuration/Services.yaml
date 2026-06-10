@@ -4,11 +4,8 @@ services:
     autoconfigure: true
     public: false
 
-  Wazum\CacheFlushLock\Configuration\ExtensionConfiguration: ~
-
-  Wazum\CacheFlushLock\Lock\FlushLock: ~
-
-  Wazum\CacheFlushLock\EventListener\RemoveLockedClearCacheActions:
-    tags:
-      - name: event.listener
-        identifier: 'cache-flush-lock/remove-locked-clear-cache-actions'
+  Wazum\CacheFlushLock\:
+    resource: '../Classes/*'
+    exclude:
+      - '../Classes/Cache/LockableCacheManager.php'
+      - '../Classes/Service/LockableOpcodeCacheService.php'

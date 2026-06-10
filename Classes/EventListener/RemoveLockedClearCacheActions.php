@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Wazum\CacheFlushLock\EventListener;
 
 use TYPO3\CMS\Backend\Backend\Event\ModifyClearCacheActionsEvent;
+use TYPO3\CMS\Core\Attribute\AsEventListener;
 use Wazum\CacheFlushLock\Lock\FlushLock;
 
+#[AsEventListener('cache-flush-lock/remove-locked-clear-cache-actions')]
 final readonly class RemoveLockedClearCacheActions
 {
     public function __construct(
