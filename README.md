@@ -35,6 +35,18 @@ vendor/bin/typo3 cache:flush --cache fluid_template,l10n
 
 All identifiers must be valid or nothing is flushed. The dependency injection cache is not flushable this way — use `cache:flush --group di`.
 
+Run the option without a value (or with an unknown name) at a terminal to pick interactively:
+
+```bash
+vendor/bin/typo3 cache:flush --cache
+```
+
+In CI and deployment, pass `--no-interaction` (`-n`) so a missing or unknown identifier fails with a clear error instead of opening the picker:
+
+```bash
+vendor/bin/typo3 cache:flush --cache fluid_template --no-interaction
+```
+
 ## What it does not block
 
 - CLI: `vendor/bin/typo3 cache:flush` always works — deployments are unaffected.

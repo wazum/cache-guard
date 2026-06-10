@@ -194,7 +194,7 @@ final class CacheGuardTest extends FunctionalTestCase
         $command = $this->get(CommandRegistry::class)->getCommandByIdentifier('cache:flush');
         $tester = new CommandTester($command);
 
-        $exitCode = $tester->execute(['--cache' => '']);
+        $exitCode = $tester->execute(['--cache' => ''], ['interactive' => false]);
 
         self::assertSame(1, $exitCode);
     }
@@ -205,10 +205,49 @@ final class CacheGuardTest extends FunctionalTestCase
         $command = $this->get(CommandRegistry::class)->getCommandByIdentifier('cache:flush');
         $tester = new CommandTester($command);
 
-        $exitCode = $tester->execute(['--cache' => 'does_not_exist']);
+        $exitCode = $tester->execute(['--cache' => 'does_not_exist'], ['interactive' => false]);
 
         self::assertSame(1, $exitCode);
         self::assertStringContainsString('does_not_exist', $tester->getDisplay());
+    }
+
+    #[Test]
+    public function interactiveCacheOptionOpensPickerForBareOption(): void
+    {
+        $command = $this->get(CommandRegistry::class)->getCommandByIdentifier('cache:flush');
+        $tester = new CommandTester($command);
+        $tester->setInputs(['fluid_template']);
+
+        $exitCode = $tester->execute(['--cache' => null], ['interactive' => true]);
+
+        self::assertSame(0, $exitCode);
+        self::assertStringContainsString('fluid_template', $tester->getDisplay());
+    }
+
+    #[Test]
+    public function interactiveCacheOptionFallsBackToPickerForUnknownValue(): void
+    {
+        $command = $this->get(CommandRegistry::class)->getCommandByIdentifier('cache:flush');
+        $tester = new CommandTester($command);
+        $tester->setInputs(['fluid_template']);
+
+        $exitCode = $tester->execute(['--cache' => 'does_not_exist'], ['interactive' => true]);
+
+        self::assertSame(0, $exitCode);
+        self::assertStringContainsString('does_not_exist', $tester->getDisplay());
+        self::assertStringContainsString('fluid_template', $tester->getDisplay());
+    }
+
+    #[Test]
+    public function bareCacheOptionWithoutInteractionFails(): void
+    {
+        $command = $this->get(CommandRegistry::class)->getCommandByIdentifier('cache:flush');
+        $tester = new CommandTester($command);
+
+        $exitCode = $tester->execute(['--cache' => null], ['interactive' => false]);
+
+        self::assertSame(1, $exitCode);
+        self::assertStringContainsString('No cache identifiers given', $tester->getDisplay());
     }
 
     private function initializeEnvironment(ApplicationContext $context, bool $cli): void
