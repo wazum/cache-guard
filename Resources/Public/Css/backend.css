@@ -1,0 +1,9 @@
+.t3js-toolbar-cache-flush-action[aria-describedby="cacheFlushLockInformation-description"] {
+    cursor: not-allowed;
+    opacity: 0.65;
+}
+
+.t3js-toolbar-cache-flush-action[aria-describedby="cacheFlushLockInformation-description"]:hover,
+.t3js-toolbar-cache-flush-action[aria-describedby="cacheFlushLockInformation-description"]:focus {
+    background-color: transparent;
+}

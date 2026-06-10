@@ -36,8 +36,25 @@ final class RemoveLockedClearCacheActionsTest extends UnitTestCase
 
         (new RemoveLockedClearCacheActions(new FlushLock()))($event);
 
-        self::assertSame(['pages'], array_column($event->getCacheActions(), 'id'));
+        self::assertNotContains('all', array_column($event->getCacheActions(), 'id'));
         self::assertSame(['pages'], $event->getCacheActionIdentifiers());
+    }
+
+    #[Test]
+    public function addsInertInformationRowInLockedContext(): void
+    {
+        $this->initializeEnvironment('Production', false);
+        $event = $this->createEventWithPagesAndAllActions();
+
+        (new RemoveLockedClearCacheActions(new FlushLock()))($event);
+
+        $actions = $event->getCacheActions();
+        self::assertSame(['pages', 'cacheFlushLockInformation'], array_column($actions, 'id'));
+
+        $informationRow = end($actions);
+        self::assertArrayNotHasKey('endpoint', $informationRow);
+        self::assertSame('info', $informationRow['severity']);
+        self::assertStringContainsString('locallang.xlf:toolbar.systemCachesLocked', $informationRow['title']);
     }
 
     private function createEventWithPagesAndAllActions(): ModifyClearCacheActionsEvent

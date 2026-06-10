@@ -13,3 +13,5 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][CacheManager::class] = [
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['Objects'][OpcodeCacheService::class] = [
     'className' => LockableOpcodeCacheService::class,
 ];
+
+$GLOBALS['TYPO3_CONF_VARS']['BE']['stylesheets']['cache_flush_lock'] = 'EXT:cache_flush_lock/Resources/Public/Css/backend.css';

@@ -142,7 +142,9 @@ final class CacheFlushLockTest extends FunctionalTestCase
 
         $this->get(EventDispatcherInterface::class)->dispatch($event);
 
-        self::assertSame(['pages'], array_column($event->getCacheActions(), 'id'));
+        $actionIds = array_column($event->getCacheActions(), 'id');
+        self::assertNotContains('all', $actionIds);
+        self::assertContains('cacheFlushLockInformation', $actionIds);
     }
 
     private function initializeEnvironment(ApplicationContext $context, bool $cli): void

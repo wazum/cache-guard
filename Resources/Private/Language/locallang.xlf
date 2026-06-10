@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xliff version="1.0">
+    <file source-language="en" datatype="plaintext" original="EXT:cache_flush_lock/Resources/Private/Language/locallang.xlf" product-name="cache_flush_lock">
+        <header/>
+        <body>
+            <trans-unit id="toolbar.systemCachesLocked.title">
+                <source>System caches are locked</source>
+            </trans-unit>
+            <trans-unit id="toolbar.systemCachesLocked.description">
+                <source>Clearing system caches is disabled in this context (deployment-managed).</source>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>
