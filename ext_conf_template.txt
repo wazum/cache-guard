@@ -1,0 +1,5 @@
+# cat=basic; type=string; label=Locked cache groups: Comma-separated cache group identifiers that must not be flushed from the backend in locked contexts
+lockedGroups = system
+
+# cat=basic; type=string; label=Locked context prefixes: Comma-separated application context prefixes in which the lock is active (e.g. "Production" also matches "Production/Staging")
+lockedContexts = Production

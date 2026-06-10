@@ -1,0 +1,55 @@
+{
+    "name": "wazum/cache-flush-lock",
+    "description": "Prevents backend cache flushes of protected cache groups in production-like contexts",
+    "license": "GPL-2.0-or-later",
+    "type": "typo3-cms-extension",
+    "authors": [
+        {
+            "name": "Wolfgang Klinger",
+            "email": "wolfgang@wazum.com"
+        }
+    ],
+    "require": {
+        "php": "^8.2",
+        "typo3/cms-core": "^13.4 || ~14.3.0",
+        "typo3/cms-backend": "^13.4 || ~14.3.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.65",
+        "phpstan/phpstan": "^2.0",
+        "phpunit/phpunit": "^11.5",
+        "typo3/testing-framework": "^8.2 || ^9.0",
+        "typo3/cms-install": "^13.4 || ~14.3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Wazum\\CacheFlushLock\\": "Classes/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Wazum\\CacheFlushLock\\Tests\\": "Tests/"
+        }
+    },
+    "config": {
+        "vendor-dir": ".Build/vendor",
+        "bin-dir": ".Build/bin",
+        "allow-plugins": {
+            "typo3/class-alias-loader": true,
+            "typo3/cms-composer-installers": true
+        }
+    },
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "cache_flush_lock",
+            "web-dir": ".Build/Web"
+        }
+    },
+    "scripts": {
+        "test:unit": "phpunit -c Tests/phpunit.xml",
+        "test:functional": "typo3DatabaseDriver=pdo_sqlite phpunit -c Tests/phpunit.functional.xml",
+        "phpstan": "phpstan analyse",
+        "cs:check": "php-cs-fixer fix --dry-run --diff",
+        "cs:fix": "php-cs-fixer fix"
+    }
+}
