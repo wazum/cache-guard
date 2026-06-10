@@ -9,3 +9,9 @@ services:
     exclude:
       - '../Classes/Cache/LockableCacheManager.php'
       - '../Classes/Service/LockableOpcodeCacheService.php'
+      - '../Classes/Service/LockableOpcodeCacheServiceV12.php'
+
+  Wazum\CacheGuard\EventListener\RemoveLockedClearCacheActions:
+    tags:
+      - name: event.listener
+        identifier: 'cache-guard/remove-locked-clear-cache-actions'
