@@ -5,7 +5,7 @@
 [![TYPO3](https://img.shields.io/badge/TYPO3-13.4%20|%2014.3-orange.svg)](https://typo3.org/)
 [![License](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](LICENSE)
 
-Deployment warms your system caches; this extension makes sure no backend user wipes them between deployments. Editors keep clearing page caches, deployments keep flushing everything — only the destructive bulk flush of warmed system caches is locked in production.
+Deliberate cache control for TYPO3: **protect** the warmed system caches from destructive backend flushes between deployments, and **flush precisely** the caches you mean to. Editors keep clearing page caches, deployments keep flushing everything, and you can clear a single cache (e.g. `fluid_template`) instead of wiping the whole system group — while the bulk flush of warmed system caches stays locked in production.
 
 ![Clear-cache dropdown with the system cache flush locked](Documentation/Images/clear-cache-dropdown.png)
 
