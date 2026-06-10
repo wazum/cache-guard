@@ -14,6 +14,7 @@ use TYPO3\CMS\Core\Console\CommandRegistry;
 use TYPO3\CMS\Core\Core\ApplicationContext;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\DependencyInjection\ServiceProviderRegistry;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Package\PackageManager;
 use TYPO3\CMS\Core\Service\OpcodeCacheService;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -21,6 +22,7 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 use Wazum\CacheGuard\Cache\LockableCacheManager;
 use Wazum\CacheGuard\Command\CacheFlushCommand;
 use Wazum\CacheGuard\Service\LockableOpcodeCacheService;
+use Wazum\CacheGuard\Service\LockableOpcodeCacheServiceV12;
 use Wazum\CacheGuard\ServiceProvider;
 
 final class CacheGuardTest extends FunctionalTestCase
@@ -77,10 +79,11 @@ final class CacheGuardTest extends FunctionalTestCase
         // for the request (CacheManager is immune — its factory has a boot.state guard).
         // From the first warm request on, the container provides the subclass — asserted
         // here via the XCLASS mapping, which getClassName() consults uncached.
-        self::assertSame(
-            LockableOpcodeCacheService::class,
-            GeneralUtility::getClassName(OpcodeCacheService::class),
-        );
+        $expectedClass = (new Typo3Version())->getMajorVersion() >= 13
+            ? LockableOpcodeCacheService::class
+            : LockableOpcodeCacheServiceV12::class;
+
+        self::assertSame($expectedClass, GeneralUtility::getClassName(OpcodeCacheService::class));
     }
 
     #[Test]

@@ -10,23 +10,22 @@ use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Service\OpcodeCacheService;
 use TYPO3\TestingFramework\Core\Unit\UnitTestCase;
-use Wazum\CacheGuard\Service\LockableOpcodeCacheService;
+use Wazum\CacheGuard\Service\LockableOpcodeCacheServiceV12;
 
-final class LockableOpcodeCacheServiceTest extends UnitTestCase
+final class LockableOpcodeCacheServiceV12Test extends UnitTestCase
 {
     protected bool $backupEnvironment = true;
 
     #[Test]
     public function isUsableWhereverTheCoreServiceIsExpected(): void
     {
-        if ((new Typo3Version())->getMajorVersion() < 13) {
-            self::markTestSkipped('LockableOpcodeCacheService is readonly and only loads on TYPO3 v13+.');
+        if ((new Typo3Version())->getMajorVersion() >= 13) {
+            self::markTestSkipped('On TYPO3 v13+ OpcodeCacheService is readonly; the V12 subclass only loads on v12.');
         }
 
         $this->initializeEnvironment('Production', false);
-        $service = new LockableOpcodeCacheService();
+        $service = new LockableOpcodeCacheServiceV12();
         self::assertInstanceOf(OpcodeCacheService::class, $service);
-        // Blocked full reset and allowed targeted invalidation both complete without side effects here.
         $service->clearAllActive();
         $service->clearAllActive(__FILE__);
     }

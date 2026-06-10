@@ -4,3 +4,12 @@ parameters:
         - Classes
     bootstrapFiles:
         - .Build/vendor/autoload.php
+    # The clear-cache listener's `@phpstan-ignore argument.type` matches only on
+    # TYPO3 13+, where ModifyClearCacheActionsEvent enforces the CacheAction shape;
+    # on 12.4 the event takes a plain array, so the ignore is harmlessly unmatched.
+    reportUnmatchedIgnoredErrors: false
+    excludePaths:
+        # Version-specific XCLASS subclasses: each only compiles against its matching
+        # core (readonly on v13+, plain on v12), so static analysis cannot see both.
+        - Classes/Service/LockableOpcodeCacheService.php
+        - Classes/Service/LockableOpcodeCacheServiceV12.php
