@@ -1,6 +1,19 @@
 # Cache Flush Lock
 
-Prevents backend cache flushes of protected cache groups in production-like TYPO3 contexts. Deployment warms the system caches; this extension makes sure no backend user wipes them between deployments.
+[![Tests](https://github.com/wazum/cache-flush-lock/actions/workflows/ci.yml/badge.svg)](https://github.com/wazum/cache-flush-lock/actions)
+[![PHP](https://img.shields.io/badge/PHP-8.2%20|%208.3%20|%208.4%20|%208.5-blue.svg)](https://www.php.net/)
+[![TYPO3](https://img.shields.io/badge/TYPO3-13.4%20|%2014.3-orange.svg)](https://typo3.org/)
+[![License](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](LICENSE)
+
+Deployment warms your system caches; this extension makes sure no backend user wipes them between deployments. Editors keep clearing page caches, deployments keep flushing everything — only the destructive bulk flush of warmed system caches is locked in production.
+
+## Installation
+
+```bash
+composer require wazum/cache-flush-lock
+```
+
+No setup needed — the defaults lock the `system` cache group in `Production` contexts.
 
 ## What it does
 
@@ -14,14 +27,6 @@ Prevents backend cache flushes of protected cache groups in production-like TYPO
 - CLI: `vendor/bin/typo3 cache:flush` always works — deployments are unaffected.
 - The Install Tool / Maintenance "Flush cache" and the DI container cache (system-maintainer territory).
 - Tag-based invalidation (`flushCachesByTag`/`flushCachesByTags`) — targeted invalidation is not a bulk clear.
-
-## Installation
-
-```bash
-composer require wazum/cache-flush-lock
-```
-
-Supports TYPO3 13.4 and 14.3, PHP 8.2+.
 
 ## Configuration
 
@@ -40,3 +45,11 @@ Hide the "Flush all caches" entry per user/group via User TSconfig (UI only, the
 options.clearCache.all = 0
 ```
 
+## Requirements
+
+- TYPO3 13.4 or 14.3
+- PHP 8.2, 8.3, 8.4 or 8.5
+
+## License
+
+GPL-2.0-or-later — see [LICENSE](LICENSE).
