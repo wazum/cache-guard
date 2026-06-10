@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Wazum\CacheFlushLock\Tests\Functional;
 
 use PHPUnit\Framework\Attributes\Test;
+use Psr\EventDispatcher\EventDispatcherInterface;
+use TYPO3\CMS\Backend\Backend\Event\ModifyClearCacheActionsEvent;
 use TYPO3\CMS\Core\Cache\Backend\TransientMemoryBackend;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Core\ApplicationContext;
@@ -127,6 +129,20 @@ final class CacheFlushLockTest extends FunctionalTestCase
 
         self::assertTrue($assetsCache->has('lockProbe'));
         self::assertFalse($pagesCache->has('lockProbe'));
+    }
+
+    #[Test]
+    public function flushAllToolbarActionIsRemovedInLockedContext(): void
+    {
+        $this->initializeEnvironment(new ApplicationContext('Production'), false);
+        $event = new ModifyClearCacheActionsEvent(
+            [['id' => 'pages'], ['id' => 'all']],
+            ['pages', 'all'],
+        );
+
+        $this->get(EventDispatcherInterface::class)->dispatch($event);
+
+        self::assertSame(['pages'], array_column($event->getCacheActions(), 'id'));
     }
 
     private function initializeEnvironment(ApplicationContext $context, bool $cli): void

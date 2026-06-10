@@ -1,0 +1,14 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: false
+
+  Wazum\CacheFlushLock\Configuration\ExtensionConfiguration: ~
+
+  Wazum\CacheFlushLock\Lock\FlushLock: ~
+
+  Wazum\CacheFlushLock\EventListener\RemoveLockedClearCacheActions:
+    tags:
+      - name: event.listener
+        identifier: 'cache-flush-lock/remove-locked-clear-cache-actions'
