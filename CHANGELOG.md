@@ -5,6 +5,13 @@ All notable changes to this project are documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.1] - 2026-06-23
+
+### Changed
+
+- Exclude development files (tests, documentation, CI configuration) from the
+  Composer dist package via `.gitattributes`, slimming installs.
+
 ## [1.0.0] - 2026-06-23
 
 Initial release.
@@ -23,4 +30,5 @@ Initial release.
   at a terminal.
 - Support for TYPO3 12.4, 13.4 and 14.3 on PHP 8.2–8.5 (12.4 runs on PHP 8.2–8.3).
 
+[1.0.1]: https://github.com/wazum/cache-guard/releases/tag/1.0.1
 [1.0.0]: https://github.com/wazum/cache-guard/releases/tag/1.0.0
