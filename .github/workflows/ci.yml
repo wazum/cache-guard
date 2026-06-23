@@ -2,6 +2,8 @@ name: CI
 
 on:
   push:
+    branches:
+      - main
   pull_request:
 
 jobs:
@@ -29,6 +31,8 @@ jobs:
         run: |
           composer require typo3/cms-core:"${{ matrix.typo3 }}" typo3/cms-backend:"${{ matrix.typo3 }}" --no-update
           composer require typo3/cms-install:"${{ matrix.typo3 }}" --dev --no-update
+      - name: Allow advisory-affected releases (no ELTS subscription in CI)
+        run: composer config policy.advisories.block false
       - run: composer update --no-interaction --no-progress
       - run: composer cs:check
       - run: composer phpstan
